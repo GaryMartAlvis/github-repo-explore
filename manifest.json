@@ -3,7 +3,11 @@
   "name": "GitHub Repo Explorer",
   "version": "1.0",
   "description": "Explora y busca en repositorios de GitHub",
-  "permissions": ["identity", "storage"],
+  "permissions": [
+    "identity",
+    "storage",
+    "https://github.com/*"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -28,5 +32,9 @@
       "resources": ["config.js", "popup.js", "background.js"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "oauth2": {
+    "client_id": "Ov23li3yEXnipdPdNLzf",
+    "scopes": ["repo"]
+  }
 }
