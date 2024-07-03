@@ -1,3 +1,5 @@
+import { CONFIG } from './config.js';
+
 let accessToken = null;
 let currentRepo = null;
 

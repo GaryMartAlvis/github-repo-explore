@@ -1,3 +1,5 @@
+import { CONFIG } from './config.js';
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'authenticate') {
     authenticate().then(token => sendResponse({token})).catch(error => sendResponse({error: error.message}));
@@ -52,7 +54,5 @@ function getAccessToken(code) {
 }
 
 function refreshToken() {
-  // GitHub no proporciona un método directo para refrescar tokens.
-  // En su lugar, debemos realizar una nueva autenticación.
   return authenticate();
 }
