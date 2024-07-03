@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub Repo Explorer</title>
+  <link rel="stylesheet" type="text/css" href="popup.css">
+</head>
+<body>
+  <div id="login-container">
+    <button id="login-button">Iniciar sesión con GitHub</button>
+  </div>
+  <div id="repo-selector" style="display:none;">
+    <input type="text" id="repo-input" placeholder="usuario/repositorio">
+    <button id="select-repo">Seleccionar repositorio</button>
+  </div>
+  <div id="search-container" style="display:none;">
+    <p id="current-repo"></p>
+    <input type="text" id="search-input" placeholder="Buscar en archivos">
+    <button id="search-button">Buscar</button>
+    <div id="results"></div>
+    <button id="logout-button">Cerrar sesión</button>
+  </div>
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

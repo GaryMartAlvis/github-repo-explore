@@ -1,0 +1,85 @@
+body {
+  width: 300px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  margin: 0;
+}
+
+h1 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #1e1e1e;
+  border: 1px solid #333333;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #333333;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #444444;
+}
+
+#results {
+  margin-top: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#results p {
+  background-color: #1e1e1e;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+#current-repo {
+  font-size: 14px;
+  color: #bbbbbb;
+  margin-bottom: 15px;
+}
+
+#logout-button {
+  background-color: #660000;
+  margin-top: 20px;
+}
+
+#logout-button:hover {
+  background-color: #880000;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444444;
+}
