@@ -5,8 +5,11 @@
   "description": "Explora y busca en repositorios de GitHub",
   "permissions": [
     "identity",
-    "storage",
-    "https://github.com/*"
+    "storage"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://api.github.com/*"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -32,9 +35,5 @@
       "resources": ["config.js", "popup.js", "background.js"],
       "matches": ["<all_urls>"]
     }
-  ],
-  "oauth2": {
-    "client_id": "Ov23li3yEXnipdPdNLzf",
-    "scopes": ["repo"]
-  }
+  ]
 }
