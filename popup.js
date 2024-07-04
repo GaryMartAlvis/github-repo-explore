@@ -2,6 +2,7 @@ import { CONFIG } from './config.js';
 
 let accessToken = null;
 let currentRepo = null;
+let searchResults = null;
 
 document.addEventListener('DOMContentLoaded', function() {
   chrome.storage.local.get(['accessToken', 'currentRepo'], function(result) {
@@ -23,19 +24,29 @@ function showLoginInterface() {
   document.getElementById('login-container').style.display = 'block';
   document.getElementById('repo-selector').style.display = 'none';
   document.getElementById('search-container').style.display = 'none';
+  document.getElementById('file-content-container').style.display = 'none';
 }
 
 function showRepoSelector() {
   document.getElementById('login-container').style.display = 'none';
   document.getElementById('repo-selector').style.display = 'block';
   document.getElementById('search-container').style.display = 'none';
+  document.getElementById('file-content-container').style.display = 'none';
 }
 
 function showSearchInterface() {
   document.getElementById('login-container').style.display = 'none';
   document.getElementById('repo-selector').style.display = 'none';
   document.getElementById('search-container').style.display = 'block';
+  document.getElementById('file-content-container').style.display = 'none';
   document.getElementById('current-repo').textContent = `Repositorio actual: ${currentRepo}`;
+}
+
+function showFileContent() {
+  document.getElementById('login-container').style.display = 'none';
+  document.getElementById('repo-selector').style.display = 'none';
+  document.getElementById('search-container').style.display = 'none';
+  document.getElementById('file-content-container').style.display = 'block';
 }
 
 document.getElementById('login-button').addEventListener('click', () => {
@@ -68,8 +79,20 @@ document.getElementById('search-button').addEventListener('click', () => {
   if (query) {
     const [owner, repo] = currentRepo.split('/');
     searchRepo(owner, repo, query).then(results => {
+      searchResults = results;
       const resultDiv = document.getElementById('results');
-      resultDiv.innerHTML = results.items.map(item => `<p>${item.path}: ${item.name}</p>`).join('');
+      resultDiv.innerHTML = results.items.map((item, index) => 
+        `<p><a href="#" data-index="${index}">${item.path}</a></p>`
+      ).join('');
+      
+      resultDiv.addEventListener('click', (event) => {
+        if (event.target.tagName === 'A') {
+          event.preventDefault();
+          const index = event.target.getAttribute('data-index');
+          const file = searchResults.items[index];
+          fetchFileContent(file.url);
+        }
+      });
     }).catch(error => {
       if (error.message === 'Token expired') {
         refreshToken();
@@ -90,6 +113,10 @@ document.getElementById('logout-button').addEventListener('click', () => {
   });
 });
 
+document.getElementById('back-button').addEventListener('click', () => {
+  showSearchInterface();
+});
+
 function searchRepo(owner, repo, query) {
   return fetch(`https://api.github.com/search/code?q=${query}+repo:${owner}/${repo}`, {
     headers: {
@@ -105,6 +132,24 @@ function searchRepo(owner, repo, query) {
       throw new Error('Error en la búsqueda');
     }
     return response.json();
+  });
+}
+
+function fetchFileContent(url) {
+  fetch(url, {
+    headers: {
+      'Authorization': `token ${accessToken}`,
+      'Accept': 'application/vnd.github.v3.raw'
+    }
+  })
+  .then(response => response.text())
+  .then(content => {
+    document.getElementById('file-name').textContent = url.split('/').pop();
+    document.getElementById('file-content').textContent = content;
+    showFileContent();
+  })
+  .catch(error => {
+    alert('Error al obtener el contenido del archivo: ' + error.message);
   });
 }
 
